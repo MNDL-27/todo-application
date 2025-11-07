@@ -7,6 +7,8 @@ A full-stack MERN (MongoDB, Express, React, Node.js) task management application
 ![React](https://img.shields.io/badge/react-18.3.1-blue.svg)
 ![MongoDB](https://img.shields.io/badge/mongodb-atlas-green.svg)
 
+> 🌐 **[View Live Demo Website](https://mndl-27.github.io/todo-application/)** | 📖 **[Documentation](#-quick-start)**
+
 ---
 
 ## ✨ Features
