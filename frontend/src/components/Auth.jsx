@@ -18,8 +18,11 @@ function Auth({ onLogin }) {
 
     try {
       const endpoint = isLogin ? '/login' : '/register';
+      const fullUrl = `${AUTH_URL}${endpoint}`;
       
-      const response = await fetch(`${AUTH_URL}${endpoint}`, {
+      console.log(`Attempting to ${isLogin ? 'login' : 'register'} at:`, fullUrl);
+      
+      const response = await fetch(fullUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
@@ -35,7 +38,18 @@ function Auth({ onLogin }) {
       localStorage.setItem('username', data.username);
       onLogin(data.token);
     } catch (err) {
-      setError(err.message || 'Network error. Is the server running?');
+      console.error('Authentication error:', err);
+      
+      // Provide more detailed error messages
+      let errorMessage = 'An error occurred during authentication.';
+      
+      if (err.name === 'TypeError' && err.message.includes('fetch')) {
+        errorMessage = `Failed to connect to server at ${AUTH_URL}. Please ensure the backend server is running at this address.`;
+      } else if (err.message) {
+        errorMessage = err.message;
+      }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
